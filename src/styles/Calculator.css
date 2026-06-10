@@ -1,0 +1,82 @@
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+    background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.1), transparent 25%), #08111d;
+}
+
+.sidebar {
+    background: #0d1624;
+    padding: 2rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-weight: 700;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.sidebar-nav a {
+    display: block;
+    color: var(--color-text-dark);
+    text-decoration: none;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+}
+
+.sidebar-nav a.active,
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-text-light);
+}
+
+.main-content {
+    padding: 2rem;
+}
+
+.calculator-section {
+    background: var(--color-card-background);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.calculator-section .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.calculator-section input,
+.calculator-section select {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text-light);
+}
+
+.calculator-section button {
+    margin-top: 1rem;
+}
+
+#calculationResult {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1.6rem;
+}

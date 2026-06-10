@@ -1,0 +1,23 @@
+{
+  "tariffs": [
+    {
+      "type": "Domestique Petite Puissance (DPP)",
+      "tranches": [
+        { "min": 0, "max": 150, "price_per_kwh": 80, "fixed_charge": 1000 },
+        { "min": 151, "max": 250, "price_per_kwh": 100, "fixed_charge": 1500 },
+        { "min": 251, "max": -1, "price_per_kwh": 120, "fixed_charge": 2000 }
+      ],
+      "tva_rate": 0.18,
+      "redevance_elec": 2500
+    },
+    {
+      "type": "Professionnel",
+      "tranches": [
+        { "min": 0, "max": 500, "price_per_kwh": 110, "fixed_charge": 3000 },
+        { "min": 501, "max": -1, "price_per_kwh": 140, "fixed_charge": 5000 }
+      ],
+      "tva_rate": 0.18,
+      "redevance_elec": 5000
+    }
+  ]
+}

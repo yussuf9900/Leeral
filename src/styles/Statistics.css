@@ -1,0 +1,27 @@
+.statistics-section {
+    background: var(--color-card-background);
+    padding: 2rem;
+    border-radius: 28px;
+    box-shadow: var(--shadow-sm);
+    min-height: 70vh;
+}
+
+.statistics-section h2 {
+    margin-bottom: 1.5rem;
+}
+
+#consumptionChart {
+    width: 100%;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    display: block;
+}
+
+#statisticsSummary {
+    margin-top: 1.5rem;
+    color: var(--color-text-light);
+}
+
+.error-message {
+    color: var(--color-error);
+}

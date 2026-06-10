@@ -1,0 +1,237 @@
+/*Specific to Register Page*/
+.register-card {
+  width: min(100%, 30rem);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 1.65rem;
+}
+
+.auth-eyebrow {
+  margin: 0 0 0.55rem;
+  color: #60a5fa;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+
+.card-header p:not(.auth-eyebrow) {
+  margin: 0.65rem auto 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form-group label,
+.label-row label {
+  color: #dbeafe;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.forgot-password-link,
+.footer-link a {
+  color: #60a5fa;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.forgot-password-link:hover,
+.footer-link a:hover {
+  color: #bfdbfe;
+}
+
+.input-shell {
+  min-height: 3.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.95rem;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 0.9rem;
+  background: rgba(15, 23, 42, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.input-shell:focus-within {
+  border-color: rgba(96, 165, 250, 0.86);
+  background: rgba(15, 23, 42, 0.76);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.input-shell input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.96rem;
+}
+
+.input-shell input::placeholder {
+  color: #64748b;
+}
+
+.input-icon {
+  flex: 0 0 auto;
+  color: #60a5fa;
+  font-size: 0.98rem;
+  opacity: 0.88;
+}
+
+.auth-submit {
+  width: 100%;
+  min-height: 3.35rem;
+  margin-top: 0.35rem;
+  border-radius: 0.9rem;
+}
+
+.auth-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 1.35rem 0;
+  color: #64748b;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.auth-divider span {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.34), transparent);
+}
+
+.auth-divider p {
+  margin: 0;
+}
+
+.card-footer {
+  text-align: center;
+}
+
+.card-footer p {
+  margin: 0 0 0.8rem;
+  color: #94a3b8;
+}
+
+.btn-secondary {
+  min-height: 3rem;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid rgba(96, 165, 250, 0.32);
+  border-radius: 0.9rem;
+  background: rgba(37, 99, 235, 0.08);
+  color: #dbeafe;
+  cursor: pointer;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(96, 165, 250, 0.64);
+  background: rgba(37, 99, 235, 0.18);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.profile-type-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+}
+
+.profile-option {
+  min-height: 4.6rem;
+  display: grid;
+  place-items: center;
+  gap: 0.35rem;
+  padding: 0.7rem 0.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 0.9rem;
+  background: rgba(15, 23, 42, 0.54);
+  color: #cbd5e1;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 800;
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.profile-option span {
+  color: #60a5fa;
+  font-size: 1.05rem;
+}
+
+.profile-option.active {
+  border-color: rgba(96, 165, 250, 0.8);
+  background: rgba(37, 99, 235, 0.18);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.footer-link {
+  margin-top: 1rem;
+}
+
+.footer-link p {
+  margin: 0;
+}
+
+.auth-footer {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 2rem 1.5rem;
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.auth-status,
+.auth-footer nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.auth-status span:first-child {
+  color: #60a5fa;
+}
+
+.auth-footer a:hover {
+  color: #cbd5e1;
+}
