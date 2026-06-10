@@ -13,9 +13,10 @@ function IntroPage() {
 
       <main class="intro-main">
         <section class="intro-content" aria-labelledby="intro-title">
-          <p class="intro-kicker">LEERAL ENERGIE</p>
+          <div class="intro-kicker">LEERAL</div> 
+          <div class="intro-kicker" style="color: #FFD000;">ENERGIE</div>
           <h1 id="intro-title" class="main-title">
-            Calculez votre facture Senelec en quelques secondes
+            <div>Calculez votre facture Senelec</div><div style="color: #FFD000;">en quelques secondes</div>
           </h1>
           <button id="intro-calc-btn" class="btn-primary btn-large" type="button">
             Calculer ma facture

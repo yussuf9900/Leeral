@@ -1,6 +1,6 @@
 import store from './store/store.js';
 
-// Map routes to PascalCase page component names
+
 const routes = {
     '/': 'Intro',
     '/login': 'Login',
@@ -22,7 +22,6 @@ const render = async (path) => {
 
     try {
         if (!pageName) {
-            // Route not found - load 404 page
             pageModule = await import('./pages/NotFound/NotFound.js');
         } else {
             pageModule = await import(`./pages/${pageName}/${pageName}.js`);
@@ -31,7 +30,7 @@ const render = async (path) => {
         const pageComponent = pageModule.default;
         app.innerHTML = pageComponent();
 
-        // Call afterRender hook if it exists
+        
         if (pageComponent.afterRender) {
             pageComponent.afterRender();
         }
@@ -57,7 +56,7 @@ const navigate = (path) => {
 const handleHashChange = async () => {
     const path = window.location.hash.replace('#', '') || '/';
 
-    // Route guard for protected pages
+    
     if (protectedRoutes.includes(path) && !store.getState().isAuthenticated) {
         navigate('/login');
         return;
@@ -68,7 +67,7 @@ const handleHashChange = async () => {
 
 const initRouter = () => {
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Initial render
+    handleHashChange(); 
 };
 
 export { initRouter, navigate };
