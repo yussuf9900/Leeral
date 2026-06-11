@@ -6,14 +6,12 @@ const Login = () => `
         <header class="auth-brand-header">
             <a href="#/" class="auth-brand" aria-label="Leeral Energie">
                 <img src="assets/logos/logo.png" alt="" class="auth-logo">
-                <span>LEERAL</span>
             </a>
         </header>
 
         <main class="auth-shell">
             <section class="auth-card" aria-labelledby="login-title">
                 <div class="card-header">
-                    <p class="auth-eyebrow">Espace client Senelec</p>
                     <h2 id="login-title">Bienvenue</h2>
                     <p>Connectez-vous pour gérer votre consommation</p>
                 </div>
@@ -56,7 +54,6 @@ const Login = () => `
 
         <footer class="auth-footer">
             <div class="auth-status">
-                <span aria-hidden="true">⚡</span>
                 <span>Système sécurisé</span>
             </div>
             <nav aria-label="Liens légaux">
@@ -85,13 +82,12 @@ const attachLoginEventListeners = () => {
                 await loginUser(email, password);
                 navigate("/home");
             } catch (error) {
-                alert(error.message); // Basic error handling
+                alert(error.message); 
             }
         });
     }
 };
 
-// This function will be called after the page is rendered
 Login.afterRender = attachLoginEventListeners;
 
 export default Login;
