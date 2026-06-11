@@ -19,7 +19,113 @@
   background-image: url(../../assets/images/fond-intro.png);
   background-size: cover;
   background-position: center;
+  /* Mobile: ensure no overflow */
+  width: 100%;
+  max-width: 100vw;
 }
+
+/* ==============================
+   Responsive Mobile Adjustments
+   ============================== */
+@media (max-width: 767px) {
+  /* Ensure the mobile flex layout overrides the later grid rule */
+  .intro-main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+    padding: 0 1rem !important;
+    text-align: center !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  /* Overlay le texte sur le hero */
+  .intro-content {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 1rem 1.5rem !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+    text-align: center !important;
+  }
+
+  .intro-visual {
+    width: 100% !important;
+    min-height: 100vh !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 1 !important;
+  }
+
+  /* Header */
+  .intro-header {
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  /* Logo centering */
+  .intro-logo {
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Main layout */
+  .intro-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .intro-content {
+    margin-left: 0;
+    margin-top: 0;
+    padding: 0 1rem;
+    width: 100%;
+  }
+
+  .intro-visual {
+    order: -1; /* Show visual above content */
+    margin: 1rem auto;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .intro-visual img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .btn-outline,
+  .btn-primary {
+    width: 100%;
+    min-height: 38px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Réduire le bouton Connexion sur mobile */
+  .btn-outline {
+    min-width: auto;
+    font-weight: 600;
+  }
+
+  .intro-footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
+
 
 .intro-header,
 .intro-main,
@@ -34,6 +140,9 @@
   justify-content: space-between;
   width: 100%;
   padding: 1.5rem 2rem;
+  /* Mobile: reduce padding */
+  padding: 1rem 1rem;
+  gap: 1rem;
 }
 
 .intro-brand {
@@ -47,10 +156,12 @@
 }
 
 .intro-logo {
-  width: 150px;
-  height: 150px;
-  margin-left: 200px;
+  width: 100px;
+  height: 100px;
+  margin-left: 0;
   object-fit: contain;
+  /* Mobile: center logo */
+  margin: 0 auto;
 }
 
 .logo {
@@ -71,7 +182,7 @@
 
 .btn-outline {
   min-width: 7.6rem;
-  margin-right: 200px;
+  margin-right: 0;
   padding: 0.7rem 1.35rem;
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 0.5rem;
@@ -80,6 +191,7 @@
   cursor: pointer;
   font-weight: 700;
   transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  min-height: 44px;
 }
 
 .btn-outline:hover {
@@ -150,8 +262,9 @@
   display: flex;
   filter: drop-shadow(0 2rem 4rem rgba(15, 23, 42, 0.48));
   margin-right: 250px;
-  position: relative; 
-  
+  position: relative;
+  width: 100%;
+  justify-content: center;
 }
 
 .intro-visual::before {
