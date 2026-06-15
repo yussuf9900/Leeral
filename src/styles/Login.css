@@ -20,7 +20,7 @@
 }
 
 .auth-brand-header {
-  width: min(100%, 1180px);
+  width: min(100%, 1380px);
   margin: 0 auto;
   padding: 1.5rem 2rem 0;
   display: flex;
@@ -40,8 +40,10 @@
 }
 
 .auth-logo {
-  width: 7rem;
-  height: 7rem;
+  width: 8rem;
+  height: 8rem;
+  position: absolute;
+  top: 3.5rem;
   object-fit: contain;
   margin: 0 auto 0rem;
 }
@@ -54,7 +56,8 @@
 }
 
 .auth-card {
-  width: min(100%, 30rem);
+  width: 90%;
+  max-width: 28rem;
   padding: 2rem;
   border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 1.5rem;
@@ -63,4 +66,23 @@
     radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.22), transparent 18rem);
   box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
+  margin: 0 auto; 
+}
+
+
+/* ---- Mobile adjustments ---- */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.5rem;
+  }
+  .auth-logo {
+    position:absolute;
+    top: 1.5rem;
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+  }
+  .auth-brand-header {
+    padding-top: 1rem;
+  }
 }

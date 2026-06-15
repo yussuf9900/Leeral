@@ -46,6 +46,15 @@ python3 -m http.server 8000
 
 ## Notes
 
+- Le logo de la page **Login** a été recentré et redimensionné pour rester visible sur les écrans mobiles.
+- Un fond d'écran `fond-login.png` a été ajouté en arrière‑plan de la page Login.
+- Le CSS a été ajusté : suppression du positionnement absolu du logo, utilisation de Flexbox pour le centrage, et media‑query pour adapter la taille du logo sur petits écrans.
+- Le reste du projet reste inchangé.
+
+- Le routeur utilise le `hash` dans l'URL pour la navigation.
+- Les données de tarification sont chargées depuis `data/tariffs.json`.
+- Assure-toi que tous les fichiers d'assets référencés existent avant le déploiement.
+
 - Le routeur utilise le `hash` dans l'URL pour la navigation.
 - Les données de tarification sont chargées depuis `data/tariffs.json`.
 - Assure-toi que tous les fichiers d'assets référencés existent avant le déploiement.
