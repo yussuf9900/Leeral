@@ -240,17 +240,5 @@
   color: #cbd5e1;
 }
 
-#brand-text-register{
-  position: absolute;
-  top: 9.5rem;
-  font-size: 14px;
-}
 
-@media (max-width: 480px) {
-  #brand-text-register{
-  position: absolute;
-  top: 6rem;
-  font-size: 10px;
-}
-}
 

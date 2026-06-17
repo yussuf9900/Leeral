@@ -6,7 +6,6 @@ const Register = () => `
         <header class="auth-brand-header">
             <a href="#/" class="auth-brand" aria-label="Leeral Energie">
                 <img src="assets/logos/logo.png" alt="" class="auth-logo">
-                <p id="brand-text-register">Maîtrisez votre consommation avec précision.</p>
             </a>
         </header>
 
