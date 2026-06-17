@@ -4,21 +4,21 @@
   padding: 0;
 }
 
-/* Empêche les débordements sur mobile */
+
 img {
   max-width: 100%;
   height: auto;
 }
 
 .home-page {
-  background-color: #0b0e1a; /* couleur de secours */
+  background-color: #0b0e1a; 
   background-image: url(../../assets/images/fond-home-page.png);
   background-size: cover;
   background-position: center;
   overflow-x: hidden;
 }
 
-/* Cache la scrollbar partout */
+
 body::-webkit-scrollbar {
   display: none;
   width: 0;
@@ -29,7 +29,7 @@ body {
   -ms-overflow-style: none;
 }
 
-/* ===== TOPBAR ===== */
+
 .home-topbar {
   display: flex;
   align-items: center;
@@ -58,6 +58,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 50px;
+}
+
+#navbar-home button{
+  background: none;
+  color: #C0C6DA;
+  cursor: pointer;
 }
 
 #icon-header {
@@ -109,7 +115,6 @@ body {
   max-width: 90%;
 }
 
-/* ===== GRILLE ===== */
 .home-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -197,7 +202,6 @@ body {
     width: 60px;
   }
 
-  /* Masquer la navbar et les icônes sur mobile */
   #navbar-home {
     display: none;
     position: absolute;
@@ -212,7 +216,6 @@ body {
     backdrop-filter: blur(10px);
   }
 
-  /* Quand le menu est ouvert (toggle via JS) */
   #navbar-home.open {
     display: flex;
   }
@@ -228,12 +231,10 @@ body {
     display: none;
   }
 
-  /* Afficher le bouton hamburger */
   .menu-toggle {
     display: block;
   }
 
-  /* ---- Hero ---- */
   .home-hero {
     padding-top: 70px;
     gap: 20px;
@@ -253,7 +254,7 @@ body {
     max-width: 350px;
   }
 
-  /* ---- Grille : 1 seule colonne ---- */
+  
   .home-grid {
     width: 95%;
     margin-top: 60px;
@@ -280,7 +281,7 @@ body {
     font-size: 18px;
   }
 
-  /* Les autres cartes (GridStatusCard, EfficiencyMetric) */
+  
   .home-grid > div:not(#EnergyUsageCard):not(#ControlPanel) img {
     width: 100%;
     border-radius: 8px;

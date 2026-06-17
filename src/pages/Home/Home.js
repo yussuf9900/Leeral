@@ -17,10 +17,10 @@ const Home = () => {
                     <img src="../../../assets/logos/logo.png" alt="logo">
                 </div>
                 <div id="navbar-home">
-                    <div>Accueil</div>
-                    <div>Calculateur</div>
-                    <div>Statistiques</div>
-                    <div>Historique</div>
+                    <div><button>Accueil</button></div>
+                    <div><button>Calculateur</button></div>
+                    <div><button>Statistiques</button></div>
+                    <div><button>Historique</button></div>
                 </div>
                 <div id="icon-header">
                     <div><img src="../../../assets/icons/Icon-energie.svg" alt=""></div>
