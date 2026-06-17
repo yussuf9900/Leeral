@@ -28,6 +28,8 @@ const Home = () => {
                     <div><img src="../../../assets/icons/Icon-parametre.svg" alt=""></div>
                     <div><img src="../../../assets/icons/Icon-profile.png" alt=""></div>
                 </div>
+                <!-- Bouton hamburger pour mobile -->
+                <button class="menu-toggle" aria-label="Menu">☰</button>
             </header>
 
             <main class="home-main">
@@ -55,7 +57,14 @@ const Home = () => {
 };
 
 const attachHomeEventListeners = () => {
-    
+    // Gestion du menu hamburger
+    const toggle = document.querySelector('.menu-toggle');
+    const navbar = document.querySelector('#navbar-home');
+    if (toggle && navbar) {
+        toggle.addEventListener('click', () => {
+            navbar.classList.toggle('open');
+        });
+    }
 };
 
 Home.afterRender = attachHomeEventListeners;
