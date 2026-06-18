@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-width: none;
 }
 
 
@@ -135,7 +136,7 @@ body {
   background-image: url(../../assets/images/Fond-ControlPanel.png);
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 50px 20px;
+  padding: 50px 30px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -158,6 +159,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.logout{
+  background: none;
+  color: #C0C6DA;
+  cursor: pointer;
 }
 
 /* ============================================

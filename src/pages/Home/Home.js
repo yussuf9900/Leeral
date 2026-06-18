@@ -28,6 +28,7 @@ const Home = () => {
                     <div><img src="../../../assets/icons/Icon-parametre.svg" alt=""></div>
                     <div><img src="../../../assets/icons/Icon-profile.png" alt=""></div>
                 </div>
+                <button class="logout">Deconnexion</button>
                 <!-- Bouton hamburger pour mobile -->
                 <button class="menu-toggle" aria-label="Menu">☰</button>
             </header>
