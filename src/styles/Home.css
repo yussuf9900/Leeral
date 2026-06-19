@@ -199,6 +199,7 @@ body {
   .home-topbar {
     padding: 10px 0;
     flex-wrap: nowrap;
+    position: relative;
   }
 
   #home-logo {
@@ -242,6 +243,38 @@ body {
     display: block;
   }
 
+  /* Mobile menu for logout button */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    background: rgba(11, 14, 26, 0.95);
+    border-bottom: 1px solid rgba(250, 208, 0, 0.2);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+  }
+
+  .mobile-menu.active {
+    display: block;
+  }
+
+  .logout-mobile {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background: none;
+    color: #C0C6DA;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .logout-mobile:hover {
+    color: #FFD000;
+  }
+
   .home-hero {
     padding-top: 70px;
     gap: 20px;
@@ -261,7 +294,7 @@ body {
     max-width: 350px;
   }
 
-  
+
   .home-grid {
     width: 95%;
     margin-top: 60px;
@@ -288,7 +321,7 @@ body {
     font-size: 18px;
   }
 
-  
+
   .home-grid > div:not(#EnergyUsageCard):not(#ControlPanel) img {
     width: 100%;
     border-radius: 8px;

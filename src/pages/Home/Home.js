@@ -21,6 +21,7 @@ const Home = () => {
                     <div><button>Calculateur</button></div>
                     <div><button>Statistiques</button></div>
                     <div><button>Historique</button></div>
+                    <div><button class="logout-mobile">Déconnexion</button></div>
                 </div>
                 <div id="icon-header">
                     <div><img src="../../../assets/icons/Icon-energie.svg" alt=""></div>
@@ -28,7 +29,6 @@ const Home = () => {
                     <div><img src="../../../assets/icons/Icon-parametre.svg" alt=""></div>
                     <div><img src="../../../assets/icons/Icon-profile.png" alt=""></div>
                 </div>
-                <button class="logout">Deconnexion</button>
                 <!-- Bouton hamburger pour mobile -->
                 <button class="menu-toggle" aria-label="Menu">☰</button>
             </header>
@@ -64,6 +64,15 @@ const attachHomeEventListeners = () => {
     if (toggle && navbar) {
         toggle.addEventListener('click', () => {
             navbar.classList.toggle('open');
+        });
+    }
+
+    // Gestion du bouton de déconnexion mobile
+    const logoutMobile = document.querySelector('.logout-mobile');
+    if (logoutMobile) {
+        logoutMobile.addEventListener('click', () => {
+            logoutUser();
+            navigate('/login');
         });
     }
 };
