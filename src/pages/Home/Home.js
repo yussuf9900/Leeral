@@ -75,6 +75,22 @@ const attachHomeEventListeners = () => {
             navigate('/login');
         });
     }
+
+    // Navigation - Boutons de la navbar
+    const navButtons = document.querySelectorAll('#navbar-home button');
+    if (navButtons.length >= 4) {
+        navButtons[0].addEventListener('click', () => navigate('/home'));  // Accueil
+        navButtons[1].addEventListener('click', () => navigate('/calculator')); // Calculateur
+        navButtons[2].addEventListener('click', () => navigate('/statistics')); // Statistiques
+        navButtons[3].addEventListener('click', () => navigate('/history')); // Historique
+        // navButtons[4] est le bouton Déconnexion déjà géré ci-dessus
+    }
+
+    // Navigation - Bouton Lancer le Calculateur
+    const launchCalculatorBtn = document.querySelector('#ControlPanel button');
+    if (launchCalculatorBtn) {
+        launchCalculatorBtn.addEventListener('click', () => navigate('/calculator'));
+    }
 };
 
 Home.afterRender = attachHomeEventListeners;
