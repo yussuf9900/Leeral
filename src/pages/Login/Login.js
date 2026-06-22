@@ -13,12 +13,12 @@ const Login = () => `
             <section class="auth-card" aria-labelledby="login-title">
                 <div class="card-header">
                     <h2 id="login-title">Bienvenue</h2>
-                    <p>Connectez-vous pour gérer votre consommation</p>
+                    <p style="color: #D1C6AB;">Connectez-vous pour gérer votre consommation</p>
                 </div>
 
                 <form id="loginForm" class="auth-form">
                     <div class="form-group">
-                        <label for="email">Identifiant Email</label>
+                        <label for="email" style="color: #D1C6AB;">Identifiant Email</label>
                         <div class="input-shell">
                             <span class="input-icon" aria-hidden="true">✉</span>
                             <input type="email" id="email" placeholder="nom@exemple.sn" required>
@@ -27,8 +27,8 @@ const Login = () => `
 
                     <div class="form-group">
                         <div class="label-row">
-                            <label for="password">Mot de passe</label>
-                            <a href="#/forgot-password" class="forgot-password-link">Mot de passe oublié ?</a>
+                            <label for="password" style="color: #D1C6AB;">Mot de passe</label>
+                            <a href="#/forgot-password" class="forgot-password-link" style="color:#FFD000;">Mot de passe oublié ?</a>
                         </div>
                         <div class="input-shell">
                             <span class="input-icon" aria-hidden="true">⌕</span>
@@ -36,7 +36,7 @@ const Login = () => `
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-primary auth-submit">Se connecter</button>
+                    <button type="submit" class="btn-primary auth-submit" style="background-color: #FFD000; color: #231B00;">Se connecter</button>
                 </form>
 
                 <div class="auth-divider">
@@ -46,7 +46,7 @@ const Login = () => `
                 </div>
 
                 <div class="card-footer">
-                    <p>Nouveau sur Leeral Energie?</p>
+                    <p style="color: #D1C6AB;">Nouveau sur Leeral Energie?</p>
                     <button type="button" class="btn-secondary" id="registerBtn">Créer un compte</button>
                 </div>
             </section>
@@ -54,9 +54,9 @@ const Login = () => `
 
         <footer class="auth-footer">
             <div class="auth-status">
-                <span>Système sécurisé</span>
+                <span style="color: #DFE1F6;">Système sécurisé</span>
             </div>
-            <nav aria-label="Liens légaux">
+            <nav aria-label="Liens légaux" style="color: #DFE1F6;">
                 <a href="#">Confidentialité</a>
                 <a href="#">Conditions</a>
             </nav>
