@@ -1,6 +1,9 @@
 import store from '../../store/store.js';
 import { calculateBill, saveBill } from '../../services/billService.js';
 import { navigate } from '../../router.js';
+import { logoutUser } from '../../services/authService.js';
+
+let billChart = null;
 
 const Calculator = () => {
     const { tariffs } = store.getState();
@@ -8,119 +11,159 @@ const Calculator = () => {
         return `<p>Chargement des tarifs...</p>`;
     }
 
-    const tariffOptions = tariffs.map(tariff => 
+    const tariffOptions = tariffs.map(tariff =>
         `<option value="${tariff.type}">${tariff.type}</option>`
     ).join('');
 
     return `
-        <div class="dashboard-layout">
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <a href="#/home" class="logo">
-                        <img src="/assets/logo.png" alt="Leeral Logo">
-                        LEERAL
-                    </a>
+        <div id="calculator-page">
+            <header class="home-topbar">
+                <div id="home-logo">
+                    <img src="../../../assets/logos/logo.png" alt="logo">
                 </div>
-                <nav class="sidebar-nav">
-                    <ul>
-                        <li><a href="#/home">Accueil</a></li>
-                        <li><a href="#/calculator" class="active">Calculateur</a></li>
-                        <li><a href="#/statistics">Statistiques</a></li>
-                        <li><a href="#/history">Historique</a></li>
-                    </ul>
-                </nav>
-                <div class="sidebar-footer">
-                    <button id="logoutBtn" class="btn-secondary">Déconnexion</button>
+                <div id="icon-header">
+                    <div><img src="../../../assets/icons/Icon-energie.svg" alt=""></div>
+                    <div><img src="../../../assets/icons/Icon-notification.svg" alt=""></div>
+                    <div><img src="../../../assets/icons/Icon-parametre.svg" alt=""></div>
+                    <div><img src="../../../assets/icons/Icon-profile.png" alt=""></div>
                 </div>
-            </aside>
-            <main class="main-content">
-                <header class="dashboard-header">
-                    <h1>Calculateur de Facture</h1>
-                </header>
-                <section class="calculator-section card">
-                    <form id="billCalculatorForm">
-                        <div class="form-group">
-                            <label for="consumption">Consommation (kWh)</label>
-                            <input type="number" id="consumption" placeholder="Ex: 450" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tariffType">Type de Puissance Souscrite</label>
-                            <select id="tariffType" required>
-                                ${tariffOptions}
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-primary">CALCULER MAINTENANT</button>
-                    </form>
-                    <div id="calculationResult" class="mt-md" style="display:none;">
-                        <h3>Détail de la Facture</h3>
-                        <p>Consommation: <span id="resultConsumption"></span> kWh</p>
-                        <p>Coût hors taxes: <span id="resultTotalExclTaxes"></span> FCFA</p>
-                        <p>TVA (<span id="resultTvaRate"></span>%): <span id="resultTva"></span> FCFA</p>
-                        <p>Redevance Élec.: <span id="resultRedevance"></span> FCFA</p>
-                        <h4>Total Estimé: <span id="resultFinalAmount"></span> FCFA</h4>
-                        <button id="saveBillBtn" class="btn-secondary mt-md">Enregistrer la facture</button>
+                <!-- Bouton hamburger pour mobile -->
+                <button class="menu-toggle" aria-label="Menu">☰</button>
+            </header>
+            <div id="main-calculator">
+                <div class="siderBarre">
+                    <nav class="sidebar">
+                        <button class="nav-home">Accueil</button>
+                        <button class="nav-calculator">Calculateur</button>
+                        <button class="nav-statistics">Statistiques</button>
+                        <button class="nav-history">Historique</button>
+                        <button class="nav-logout">Déconnexion</button>
+                    </nav>
+                </div>
+                <div class="mainCalcul">
+                    <div class="calc-form">
+                        <h3>Calculateur de Facture</h3>
+                        <label for="consumption-input">Consommation (kWh) :</label>
+                        <input type="number" id="consumption-input" min="0" step="1" placeholder="ex : 300"/>
+                        <label for="tariff-select">Type de tarif :</label>
+                        <select id="tariff-select">${tariffOptions}</select>
+                        <button id="calculate-btn">Calculer</button>
+                        <button id="save-btn" style="display:none;">Enregistrer la facture</button>
                     </div>
-                </section>
-            </main>
+                    <canvas id="billChart" width="400" height="300"></canvas>
+                    <div id="bill-result" class="bill-result hidden"></div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         </div>
     `;
 };
 
 const attachCalculatorEventListeners = () => {
-    const billCalculatorForm = document.getElementById("billCalculatorForm");
-    const calculationResultDiv = document.getElementById("calculationResult");
-    const saveBillBtn = document.getElementById("saveBillBtn");
+    // Navigation hamburger
+    const toggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.siderBarre');
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    }
 
-    let latestBillData = null;
+    const consumptionInput = document.getElementById('consumption-input');
+    const tariffSelect = document.getElementById('tariff-select');
+    const calculateBtn = document.getElementById('calculate-btn');
+    const saveBtn = document.getElementById('save-btn');
 
-    if (billCalculatorForm) {
-        billCalculatorForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const consumption = parseFloat(document.getElementById("consumption").value);
-            const tariffType = document.getElementById("tariffType").value;
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', () => {
+            const consumption = parseFloat(consumptionInput.value);
+            const tariffType = tariffSelect.value;
+
+            if (isNaN(consumption) || consumption <= 0) {
+                alert('Veuillez entrer une consommation valide.');
+                return;
+            }
 
             try {
-                const result = calculateBill(consumption, tariffType);
-                latestBillData = result;
-
-                document.getElementById("resultConsumption").textContent = result.consumption;
-                document.getElementById("resultTotalExclTaxes").textContent = result.totalAmountExclTaxes.toLocaleString();
-                document.getElementById("resultTvaRate").textContent = (result.tva / result.totalAmountExclTaxes * 100).toFixed(0);
-                document.getElementById("resultTva").textContent = result.tva.toLocaleString();
-                document.getElementById("resultRedevance").textContent = result.redevance.toLocaleString();
-                document.getElementById("resultFinalAmount").textContent = result.finalAmount.toLocaleString();
-                
-                calculationResultDiv.style.display = "block";
+                const billData = calculateBill(consumption, tariffType);
+                renderChart(billData);
+                saveBtn.style.display = 'inline-block';
+                saveBtn.onclick = () => saveCurrentBill(billData);
             } catch (error) {
-                alert(error.message);
-                calculationResultDiv.style.display = "none";
+                console.error(error);
+                alert("Erreur lors du calcul.");
             }
         });
     }
 
-    if (saveBillBtn) {
-        saveBillBtn.addEventListener("click", async () => {
-            if (latestBillData) {
-                try {
-                    await saveBill(latestBillData);
-                    alert("Facture enregistrée avec succès!");
-                    navigate("/history");
-                } catch (error) {
-                    alert(error.message);
+    const saveCurrentBill = async (billData) => {
+        try {
+            await saveBill(billData);
+            alert('Facture enregistrée avec succès !');
+            saveBtn.style.display = 'none';
+        } catch (error) {
+            console.error(error);
+            alert("Erreur lors de l'enregistrement.");
+        }
+    };
+};
+
+const renderChart = (billData) => {
+    const ctx = document.getElementById('billChart');
+    if (!ctx) return;
+
+    // Destroy existing chart
+    if (billChart) {
+        billChart.destroy();
+    }
+
+    // Préparer les données pour le graphique
+    const labels = billData.consumptionBreakdown.map(b => `Tranche ${b.tranche}`);
+    const data = billData.consumptionBreakdown.map(b => b.cost);
+    const backgroundColors = ['#36A2EB', '#FF6384', '#FFCE56'];
+
+    billChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Coût par tranche (FCFA)',
+                data: data,
+                backgroundColor: backgroundColors.slice(0, data.length)
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `${ctx.parsed.y} FCFA`
+                    }
                 }
-            } else {
-                alert("Veuillez calculer une facture avant de l'enregistrer.");
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Coût (FCFA)' }
+                }
             }
-        });
-    }
+        }
+    });
 
-    // Logout button from sidebar
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
-            logoutUser();
-            navigate("/login");
-        });
+    // Afficher les résultats
+    const resultDiv = document.getElementById('bill-result');
+    if (resultDiv) {
+        resultDiv.classList.remove('hidden');
+        resultDiv.innerHTML = `
+            <h4>Résultat du calcul</h4>
+            <p><strong>Consommation:</strong> ${billData.consumption} kWh</p>
+            <p><strong>Type:</strong> ${billData.tariffType}</p>
+            <p><strong>Total HT:</strong> ${billData.totalAmountExclTaxes.toLocaleString()} FCFA</p>
+            <p><strong>TVA (18%):</strong> ${billData.tva.toLocaleString()} FCFA</p>
+            <p><strong>Redevance:</strong> ${billData.redevance.toLocaleString()} FCFA</p>
+            <p class="final-amount"><strong>Total à payer:</strong> ${billData.finalAmount.toLocaleString()} FCFA</p>
+        `;
     }
 };
 

@@ -1,82 +1,162 @@
-.dashboard-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
+#calculator-page {
     min-height: 100vh;
-    background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.1), transparent 25%), #08111d;
-}
-
-.sidebar {
-    background: #0d1624;
-    padding: 2rem 1.4rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.sidebar-header .logo {
-    display: inline-flex;
+#main-calculator {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-top: 80px;
+}
+
+.siderBarre {
+    width: 300px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mainCalcul {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-    color: var(--color-text-light);
-    font-weight: 700;
+    justify-content: center;
 }
 
-.sidebar-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 2rem 0;
-    display: grid;
-    gap: 0.75rem;
+/* Form styles */
+.calc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.sidebar-nav a {
-    display: block;
-    color: var(--color-text-dark);
-    text-decoration: none;
-    padding: 0.9rem 1rem;
-    border-radius: 16px;
+.calc-form h3 {
+    margin: 0 0 10px 0;
+    color: #FFD000;
+    font-size: 1.2rem;
 }
 
-.sidebar-nav a.active,
-.sidebar-nav a:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--color-text-light);
+.calc-form label {
+    font-size: 0.9rem;
+    color: #bdc3c7;
 }
 
-.main-content {
-    padding: 2rem;
+.calc-form input,
+.calc-form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #34495e;
+    background-color: #34495e;
+    color: white;
+    font-size: 1rem;
 }
 
-.calculator-section {
-    background: var(--color-card-background);
-    border-radius: 28px;
-    padding: 2rem;
-    box-shadow: var(--shadow-sm);
+.calc-form button {
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
 
-.calculator-section .form-group {
-    margin-bottom: 1.25rem;
+.calc-form button:hover {
+    background-color: #2ecc71;
 }
 
-.calculator-section input,
-.calculator-section select {
+#save-btn {
+    background-color: #3498db !important;
+}
+
+#save-btn:hover {
+    background-color: #5dade2 !important;
+}
+
+/* Chart container */
+#billChart {
+    max-width: 500px;
     width: 100%;
-    padding: 1rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--color-text-light);
 }
 
-.calculator-section button {
-    margin-top: 1rem;
+/* Result styles */
+.bill-result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    max-width: 500px;
+    width: 100%;
 }
 
-#calculationResult {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 1.6rem;
+.bill-result h4 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.bill-result p {
+    margin: 8px 0;
+}
+
+.final-amount {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #27ae60;
+    border-top: 2px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Sidebar navigation */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.sidebar button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    text-align: left;
+    font-size: 1rem;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sidebar button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    #main-calculator {
+        flex-direction: column;
+    }
+
+    .siderBarre {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .mainCalcul {
+        padding: 15px;
+    }
 }
