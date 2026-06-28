@@ -10,110 +10,281 @@ const Statistics = () => {
         return '';
     }
 
+    // Generate 24 vertical bars for hourly power flow
+    // Double hump shape: peak in morning and evening, low at night
+    const hourlyFlowHeights = [
+        25, 20, 18, 15, 22, 38, 62, 85, 78, 65, 58, 52,
+        48, 46, 50, 68, 75, 82, 70, 60, 55, 50, 42, 35
+    ];
+
+    const hourlyBarsHtml = hourlyFlowHeights.map((height, i) => `
+        <div class="stats-flux-bar-wrapper">
+            <div class="stats-flux-bar" style="height: ${height}%;" title="Heure ${i}h: ${height}% charge"></div>
+        </div>
+    `).join('');
+
     return `
-        <div class="dashboard-layout">
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <a href="#/home" class="logo">
-                        <img src="/assets/logo.png" alt="Leeral Logo">
-                        LEERAL
-                    </a>
+        <div id="calculator-page">
+            <!-- Header Topbar (Shared Layout) -->
+            <header class="calc-topbar">
+                <div class="calc-logo">
+                    <img src="assets/logos/logo.png" alt="Leeral Logo" onerror="this.src='../../../assets/logos/logo.png'">
+                    <span>LEERAL ENERGY</span>
                 </div>
-                <nav class="sidebar-nav">
-                    <ul>
-                        <li><a href="#/home">Accueil</a></li>
-                        <li><a href="#/calculator">Calculateur</a></li>
-                        <li><a href="#/statistics" class="active">Statistiques</a></li>
-                        <li><a href="#/history">Historique</a></li>
-                    </ul>
-                </nav>
-                <div class="sidebar-footer">
-                    <button id="logoutBtn" class="btn-secondary">Déconnexion</button>
+                <div class="calc-header-icons">
+                    <button class="calc-icon-btn" aria-label="Énergie">
+                        <img src="assets/icons/Icon-energie.svg" alt="Énergie" onerror="this.src='../../../assets/icons/Icon-energie.svg'">
+                    </button>
+                    <button class="calc-icon-btn" aria-label="Notifications">
+                        <img src="assets/icons/Icon-notification.svg" alt="Notifications" onerror="this.src='../../../assets/icons/Icon-notification.svg'">
+                    </button>
+                    <button class="calc-icon-btn" aria-label="Paramètres">
+                        <img src="assets/icons/Icon-parametre.svg" alt="Paramètres" onerror="this.src='../../../assets/icons/Icon-parametre.svg'">
+                    </button>
+                    <img class="calc-profile-avatar" src="assets/icons/Icon-profile.png" alt="Profile" onerror="this.src='../../../assets/icons/Icon-profile.png'">
                 </div>
-            </aside>
-            <main class="main-content">
-                <header class="dashboard-header">
-                    <h1>Statistiques Énergétiques</h1>
-                </header>
-                <section class="statistics-section card">
-                    <h2>Consommation par mois</h2>
-                    <canvas id="consumptionChart" width="600" height="300"></canvas>
-                    <div id="statisticsSummary" class="mt-md">
-                        <!-- Summary will be loaded here -->
+                <!-- Burger menu for mobile -->
+                <button class="calc-menu-toggle" aria-label="Menu">☰</button>
+            </header>
+
+            <div class="calc-layout">
+                <!-- Sidebar Left (Shared Layout) -->
+                <div class="calc-sidebar-wrapper">
+                    <nav class="calc-nav">
+                        <button class="calc-nav-item nav-home">
+                            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            Accueil
+                        </button>
+                        <button class="calc-nav-item nav-calculator">
+                            <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                            Calculateur
+                        </button>
+                        <button class="calc-nav-item nav-statistics active">
+                            <svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zM16.2 13H19v6h-2.8z"/></svg>
+                            Statistiques
+                        </button>
+                        <button class="calc-nav-item nav-history">
+                            <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 7 7 6.88 6.88 0 0 1-4.7-1.85l-1.42 1.43A8.93 8.93 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg>
+                            Historique
+                        </button>
+                    </nav>
+                    <div class="calc-logout-container">
+                        <button class="calc-logout-btn nav-logout">Déconnexion</button>
                     </div>
-                </section>
-            </main>
+                </div>
+
+                <!-- Main Content Area -->
+                <main class="calc-content-area">
+                    <h1 class="calc-title">Statistiques Énergétiques</h1>
+                    <p class="calc-subtitle">Analyse en temps réel des flux de puissance et optimisation prédictive du réseau.</p>
+
+                    <!-- Upper Grid (3 Cards) -->
+                    <div class="stats-top-grid">
+                        <!-- Card 1: Consommation Actuelle -->
+                        <div class="calc-card">
+                            <div class="stats-card-label-row">
+                                <span>Consommation Actuelle</span>
+                                <span class="stats-card-icon yellow">
+                                    <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                                </span>
+                            </div>
+                            <div class="stats-card-value">42.8 <span style="font-size: 1.15rem; font-weight: 700; color: var(--text-secondary);">kW/h</span></div>
+                            <div class="stats-card-subtext highlighted">+4.2% par rapport à l'heure précédente</div>
+                        </div>
+
+                        <!-- Card 2: Prévision Mensuelle -->
+                        <div class="calc-card">
+                            <div class="stats-card-label-row">
+                                <span>Prévision Mensuelle</span>
+                                <span class="stats-card-icon blue">
+                                    <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                                </span>
+                            </div>
+                            <div class="stats-card-value">1,240 <span style="font-size: 1.15rem; font-weight: 700; color: var(--text-secondary);">FCFA</span></div>
+                            <div class="stats-card-subtext">
+                                <span class="stats-card-badge">OPTIMISÉ</span>
+                                <span>Réduction de 12% prévue</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Alertes Actives -->
+                        <div class="calc-card">
+                            <div class="stats-card-label-row">
+                                <span>Alertes Actives</span>
+                                <span class="stats-card-icon red">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z"/></svg>
+                                </span>
+                            </div>
+                            <div class="stats-card-value" style="color: var(--stats-alert);">03</div>
+                            <ul class="stats-alert-list">
+                                <li class="stats-alert-item">
+                                    <span class="stats-alert-bullet"></span>
+                                    Surcharge Node-B7
+                                </li>
+                                <li class="stats-alert-item">
+                                    <span class="stats-alert-bullet"></span>
+                                    Maintenance planifiée à 04:00
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Middle Card: Flux Energétique -->
+                    <div class="calc-card stats-flux-card">
+                        <div class="stats-flux-header">
+                            <div class="stats-flux-title-area">
+                                <h2 class="stats-flux-title">Flux Énergétique (28 jours)</h2>
+                                <p class="stats-flux-subtitle">Distribution holographique de la charge réseau par heure.</p>
+                            </div>
+                            <div class="stats-flux-toggles">
+                                <button type="button" class="stats-flux-toggle-btn active" id="toggle-realtime">TEMPS RÉEL</button>
+                                <button type="button" class="stats-flux-toggle-btn" id="toggle-history">HISTORIQUE</button>
+                            </div>
+                        </div>
+
+                        <!-- 24 vertical bars -->
+                        <div class="stats-flux-chart">
+                            ${hourlyBarsHtml}
+                        </div>
+                        
+                        <!-- Labels -->
+                        <div class="stats-flux-labels">
+                            <span class="stats-flux-label">00:00</span>
+                            <span class="stats-flux-label">06:00</span>
+                            <span class="stats-flux-label">12:00</span>
+                            <span class="stats-flux-label">18:00</span>
+                            <span class="stats-flux-label">23:59</span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Grid (2 Columns) -->
+                    <div class="stats-bottom-grid">
+                        <!-- Gauges Card -->
+                        <div class="calc-card">
+                            <div class="stats-rings-container">
+                                <!-- Ring 1: Score -->
+                                <div class="stats-ring-wrapper">
+                                    <div class="stats-ring">
+                                        <svg class="ring-svg" width="140" height="140">
+                                            <circle class="ring-bg-circle" cx="70" cy="70" r="54" stroke-width="10" fill="transparent"/>
+                                            <!-- 84 Score: stroke-dasharray is 2 * pi * r = 339.3. 84% means dashoffset = 339.3 * (1 - 0.84) = 54.3 -->
+                                            <circle class="ring-fg-circle" cx="70" cy="70" r="54" stroke="var(--stats-yellow)" stroke-width="10" fill="transparent" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="54.3" style="filter: drop-shadow(0 0 5px var(--stats-yellow-glow));"/>
+                                        </svg>
+                                        <div class="stats-ring-text">
+                                            <span class="stats-ring-number">84</span>
+                                            <span class="stats-ring-label">SCORE ÉNERGIE</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ring 2: Efficacité -->
+                                <div class="stats-ring-wrapper">
+                                    <div class="stats-ring">
+                                        <svg class="ring-svg" width="140" height="140">
+                                            <circle class="ring-bg-circle" cx="70" cy="70" r="54" stroke-width="10" fill="transparent"/>
+                                            <!-- 92% Efficacité: dashoffset = 339.3 * (1 - 0.92) = 27.1 -->
+                                            <circle class="ring-fg-circle" cx="70" cy="70" r="54" stroke="var(--stats-blue)" stroke-width="10" fill="transparent" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="27.1" style="filter: drop-shadow(0 0 5px var(--stats-blue-glow));"/>
+                                        </svg>
+                                        <div class="stats-ring-text">
+                                            <span class="stats-ring-number">92%</span>
+                                            <span class="stats-ring-label">EFFICACITÉ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Insights Card -->
+                        <div class="calc-card">
+                            <h2 class="stats-insights-title">Insights</h2>
+                            <div class="stats-insights-list">
+                                <!-- Insight 1 -->
+                                <div class="stats-insight-item">
+                                    <span class="stats-insight-icon indigo">
+                                        <svg viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                        </svg>
+                                    </span>
+                                    <div class="stats-insight-content">
+                                        <h3 class="stats-insight-title-text">Optimisation de la Charge</h3>
+                                        <p class="stats-insight-desc">Déplacez les cycles de lavage à 01:00 pour économiser 4,20€/nuit.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Insight 2 -->
+                                <div class="stats-insight-item">
+                                    <span class="stats-insight-icon cyan">
+                                        <svg viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2" />
+                                        </svg>
+                                    </span>
+                                    <div class="stats-insight-content">
+                                        <h3 class="stats-insight-title-text">Gestion thermique</h3>
+                                        <p class="stats-insight-desc">L'isolation du Node-C semble faiblir. Pertes estimées : 3%.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="stats-report-btn" id="generate-report-btn">Générer un rapport détaillé</button>
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
     `;
 };
 
-const attachStatisticsEventListeners = async () => {
-    const consumptionChartCanvas = document.getElementById('consumptionChart');
-    const statisticsSummaryDiv = document.getElementById('statisticsSummary');
-
-    if (consumptionChartCanvas && statisticsSummaryDiv) {
-        try {
-            const bills = await getBills();
-            if (bills.length === 0) {
-                statisticsSummaryDiv.innerHTML = '<p>Aucune donnée de consommation pour le moment.</p>';
-                return;
-            }
-
-            // Aggregate consumption by month
-            const monthlyConsumption = bills.reduce((acc, bill) => {
-                const date = new Date(bill.date);
-                const monthYear = `${date.getFullYear()}-${date.getMonth() + 1}`;
-                acc[monthYear] = (acc[monthYear] || 0) + bill.consumption;
-                return acc;
-            }, {});
-
-            const labels = Object.keys(monthlyConsumption).sort();
-            const data = labels.map(monthYear => monthlyConsumption[monthYear]);
-
-            // Render simple bar chart on canvas
-            const ctx = consumptionChartCanvas.getContext('2d');
-            ctx.clearRect(0, 0, consumptionChartCanvas.width, consumptionChartCanvas.height);
-
-            const chartWidth = consumptionChartCanvas.width;
-            const chartHeight = consumptionChartCanvas.height;
-            const barWidth = (chartWidth / data.length) * 0.7;
-            const barSpacing = (chartWidth / data.length) * 0.3;
-            const maxDataValue = Math.max(...data);
-
-            ctx.fillStyle = store.getState().tariffs[0]?.tranches[0]?.price_per_kwh ? '#FFD700' : '#888'; // Use primary color or grey
-
-            data.forEach((value, index) => {
-                const barHeight = (value / maxDataValue) * (chartHeight - 50); // -50 for padding
-                const x = index * (barWidth + barSpacing) + barSpacing / 2;
-                const y = chartHeight - barHeight - 20; // -20 for bottom padding
-                ctx.fillRect(x, y, barWidth, barHeight);
-
-                // Draw labels
-                ctx.fillStyle = '#E0E6F0';
-                ctx.fillText(labels[index].split('-')[1], x + barWidth / 2 - 10, chartHeight - 5);
-                ctx.fillText(value.toFixed(0) + ' kWh', x + barWidth / 2 - 20, y - 5);
-            });
-
-            // Summary
-            const totalConsumption = data.reduce((sum, val) => sum + val, 0);
-            const averageConsumption = totalConsumption / data.length;
-            statisticsSummaryDiv.innerHTML = `
-                <p>Consommation totale sur la période: <strong>${totalConsumption.toFixed(2)} kWh</strong></p>
-                <p>Consommation moyenne mensuelle: <strong>${averageConsumption.toFixed(2)} kWh</strong></p>
-            `;
-
-        } catch (error) {
-            statisticsSummaryDiv.innerHTML = `<p class="error-message">Erreur lors du chargement des statistiques: ${error.message}</p>`;
-            console.error("Error loading statistics:", error);
-        }
+const attachStatisticsEventListeners = () => {
+    // Navigation Hamburguer menu for Mobile
+    const toggle = document.querySelector('.calc-menu-toggle');
+    const sidebar = document.querySelector('.calc-sidebar-wrapper');
+    if (toggle && sidebar) {
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
     }
 
-    // Logout button from sidebar
-    const logoutBtn = document.getElementById("logoutBtn");
+    // Sidebar navigation clicks
+    const homeBtn = document.querySelector('.nav-home');
+    const calculatorBtn = document.querySelector('.nav-calculator');
+    const statisticsBtn = document.querySelector('.nav-statistics');
+    const historyBtn = document.querySelector('.nav-history');
+    const logoutBtn = document.querySelector('.nav-logout');
+
+    if (homeBtn) homeBtn.addEventListener('click', () => navigate('/home'));
+    if (calculatorBtn) calculatorBtn.addEventListener('click', () => navigate('/calculator'));
+    if (statisticsBtn) statisticsBtn.addEventListener('click', () => navigate('/statistics'));
+    if (historyBtn) historyBtn.addEventListener('click', () => navigate('/history'));
     if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
+        logoutBtn.addEventListener('click', () => {
             logoutUser();
-            navigate("/login");
+            navigate('/login');
+        });
+    }
+
+    // Toggles for Real-time vs History power flow
+    const toggleRealtime = document.getElementById('toggle-realtime');
+    const toggleHistory = document.getElementById('toggle-history');
+    
+    if (toggleRealtime && toggleHistory) {
+        toggleRealtime.addEventListener('click', () => {
+            toggleRealtime.classList.add('active');
+            toggleHistory.classList.remove('active');
+            // Mock data swap if needed
+        });
+        
+        toggleHistory.addEventListener('click', () => {
+            toggleHistory.classList.add('active');
+            toggleRealtime.classList.remove('active');
+            // Mock data swap if needed
+        });
+    }
+
+    // Report generation
+    const reportBtn = document.getElementById('generate-report-btn');
+    if (reportBtn) {
+        reportBtn.addEventListener('click', () => {
+            alert('Génération du rapport détaillé en cours... (PDF)');
         });
     }
 };
