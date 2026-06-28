@@ -119,12 +119,100 @@ body {
 .home-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 3fr 2fr;
+  grid-template-rows: 240px 180px;
   width: 1200px;
   max-width: 95%;
-  margin-top: 300px;
+  margin-top: 250px;
   margin-bottom: 60px;
   gap: 20px;
+}
+
+/* Premium Dynamic Cards for Home Dashboard */
+.home-card {
+  background: rgba(15, 20, 36, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  border-color: #FFD000;
+  box-shadow: 0 12px 40px rgba(255, 208, 0, 0.1);
+}
+
+.home-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-card-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.home-card-icon {
+  font-size: 1rem;
+}
+
+.home-card-main-val {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 10px;
+}
+
+.home-card-unit {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.home-card-desc {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.home-card-badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+  animation: homePulse 2s infinite;
+}
+
+@keyframes homePulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.home-mini-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 55px;
+  margin-top: 15px;
+  gap: 4px;
+}
+
+.home-mini-bar {
+  flex: 1;
+  background: linear-gradient(to top, #FFD000, rgba(255, 208, 0, 0.3));
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
 }
 
 #EnergyUsageCard {
@@ -136,23 +224,32 @@ body {
   background-image: url(../../assets/images/Fond-ControlPanel.png);
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 50px 30px;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  border-radius: 12px;
+  justify-content: center;
+  gap: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 #ControlPanel button {
   width: 240px;
-  height: 55px;
-  border-radius: 10px;
+  height: 50px;
+  border-radius: 8px;
   background-color: #FFD000;
   box-shadow: 0 0 30px rgba(250, 208, 0, 0.3);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 700;
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#ControlPanel button:hover {
+  background-color: #ffe033;
+  box-shadow: 0 0 40px rgba(250, 208, 0, 0.5);
+  transform: translateY(-1px);
 }
 
 .home-main {

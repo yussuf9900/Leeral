@@ -2,6 +2,7 @@ import store from '../../store/store.js';
 import { calculateBill, saveBill } from '../../services/billService.js';
 import { navigate } from '../../router.js';
 import { logoutUser } from '../../services/authService.js';
+import { showModal } from '../../utils/modal.js';
 
 const Calculator = () => {
     const { tariffs } = store.getState();
@@ -345,17 +346,17 @@ const attachCalculatorEventListeners = () => {
             const tariffType = tariffTypeSelect.value;
 
             if (isNaN(lastVal) || lastVal < 0) {
-                alert('Veuillez entrer une consommation précédente valide.');
+                showModal('Erreur de Saisie', '<p>Veuillez entrer une consommation précédente valide.</p>');
                 return;
             }
 
             if (isNaN(currentVal) || currentVal < 0) {
-                alert('Veuillez entrer une consommation actuelle valide.');
+                showModal('Erreur de Saisie', '<p>Veuillez entrer une consommation actuelle valide.</p>');
                 return;
             }
 
             if (currentVal < lastVal) {
-                alert('La consommation actuelle doit être supérieure ou égale à la consommation précédente.');
+                showModal('Erreur de Saisie', '<p>La consommation actuelle doit être supérieure ou égale à la consommation précédente.</p>');
                 return;
             }
 
@@ -512,11 +513,11 @@ const attachCalculatorEventListeners = () => {
 
             try {
                 await saveBill(currentCalculatedBill);
-                alert('Facture enregistrée avec succès dans votre historique !');
+                showModal('Enregistrement Réussi', '<p>Facture enregistrée avec succès dans votre historique !</p>');
                 saveRow.style.display = 'none';
             } catch (error) {
                 console.error(error);
-                alert("Erreur lors de l'enregistrement de la facture.");
+                showModal('Erreur de Sauvegarde', '<p>Erreur lors de l\'enregistrement de la facture.</p>');
             }
         });
     }

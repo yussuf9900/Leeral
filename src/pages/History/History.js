@@ -2,6 +2,7 @@ import store from '../../store/store.js';
 import { getBills } from '../../services/billService.js';
 import { logoutUser } from '../../services/authService.js';
 import { navigate } from '../../router.js';
+import { showModal } from '../../utils/modal.js';
 
 const History = () => {
     const { currentUser } = store.getState();
@@ -332,7 +333,13 @@ const attachHistoryEventListeners = async () => {
             const month = e.target.dataset.month;
             const cost = e.target.dataset.cost;
             const kwh = e.target.dataset.kwh;
-            alert(`Détails du cycle de ${month} :\n- Consommation : ${kwh} kWh\n- Montant Total : ${cost} FCFA\n- Statut : En cours`);
+            showModal(`Détails du cycle - ${month}`, `
+                <p><strong>Période :</strong> ${month} 2024</p>
+                <p><strong>Consommation :</strong> ${kwh} kWh</p>
+                <p><strong>Montant Énergétique :</strong> ${cost}</p>
+                <p><strong>Statut de Facturation :</strong> <span style="color: #ffd000; font-weight: 700;">En cours</span></p>
+                <p style="color: #9ca3af; font-size: 0.85rem; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">Ce rapport affiche les données collectées en temps réel.</p>
+            `);
         });
     });
 
@@ -342,14 +349,26 @@ const attachHistoryEventListeners = async () => {
             const kwh = e.target.dataset.kwh;
             const tva = e.target.dataset.tva;
             const redevance = e.target.dataset.redevance;
-            alert(`Détails de l'estimation enregistrée :\n- Consommation : ${kwh} kWh\n- TVA (18%) : ${parseFloat(tva).toLocaleString()} FCFA\n- Redevance : ${parseFloat(redevance).toLocaleString()} FCFA\n- Montant Total : ${cost} FCFA`);
+            showModal(`Détails de l'Estimation`, `
+                <p><strong>Type de Facturation :</strong> Domestique Petite Puissance (DPP)</p>
+                <p><strong>Consommation Totale :</strong> ${kwh} kWh</p>
+                <p><strong>TVA (18%) :</strong> ${parseFloat(tva).toLocaleString()} FCFA</p>
+                <p><strong>Redevance Électricité :</strong> ${parseFloat(redevance).toLocaleString()} FCFA</p>
+                <p><strong>Montant Final (TTC) :</strong> <strong style="color: #ffd000; font-size: 1.1rem;">${cost} FCFA</strong></p>
+            `);
         });
     });
 
     document.querySelectorAll('.btn-archived').forEach(button => {
         button.addEventListener('click', (e) => {
             const month = e.target.dataset.month;
-            alert(`Ouverture de l'archive et du rapport pour le mois de ${month}... (PDF)`);
+            showModal(`Rapport Archivé - ${month}`, `
+                <p>Chargement du fichier PDF archivé pour le cycle de <strong>${month} 2024</strong>...</p>
+                <div style="display: flex; align-items: center; justify-content: center; padding: 20px; margin-top: 15px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed rgba(255,255,255,0.08);">
+                    <span style="color: #ffd000; font-size: 1.5rem; margin-right: 12px;">📁</span>
+                    <span>leeral_rapport_${month.toLowerCase()}_2024.pdf</span>
+                </div>
+            `);
         });
     });
 };
